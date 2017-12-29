@@ -40,28 +40,12 @@ tar xvzf 7.5.2.tar.gz
 mv webacula-7.5.2 webacula
 
 
->>> Gerar o password para acessar o Webacula<<<
-cd /usr/src/webacula/install/
-Executar o comando: 
-php password-to-hash.php PASSWORD  # Onde PASSWORD é o seu password
-A saída é algo como a string: '$P$BN7e27dudrIi7LHaYs91bRAIZULVR60'
-
-
->>> Editar o arquivo /usr/src/webacula/install/db.conf <<<
-Preencher os campos com as credenciais do usuário do root do MySQL e com os dados do banco de dados do bacula
-db_name='bacula'
-db_user='root'
-db_pwd='123456'
-webacula_root_pwd=''
-* Se você deixar o campo 'webacula_root' vazio, o usuário padrão é 'root' e a senha é 'bacula'.
-É possível alterar a senha após efetuar o logon.
-
-
 >>> Criar as tabelas do Webacula <<<
 Executar os comandos abaixo:
 cd /usr/src/webacula/install/MySql
 ./10_make_tables.sh
 ./20_acl_make_tables.sh
+./30_grant_mysql_privileges.sh
 
 
 >>> Editar o arquivo /usr/src/webacula/application/config.ini <<<
@@ -117,3 +101,8 @@ cat /etc/group | grep bacula
 groupadd bacula
 # Adicionar o usuário 'www-data' para o grupo 'bacula'
 usermod -aG bacula www-data
+
+
+* O usuário padrão é 'root' e a senha é 'bacula'.
+É possível alterar a senha após efetuar o logon.
+
